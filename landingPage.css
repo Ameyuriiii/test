@@ -1,87 +1,4 @@
 
-.snap-wrapper {
-    scroll-snap-type: y mandatory; /* Enables vertical snapping */
-    height: 100%;
-    overflow-y: scroll; /* Allows vertical scrolling within the wrapper */
-}
-
-
-/* Optional Smooth Transitions */
-section {
-    transition: opacity 0.5s, transform 0.5s ease;
-}
-
-section:focus-visible, section:hover {
-    opacity: 1;
-    transform: scale(1);
-}
-
-section:not(:hover) {
-    opacity: 0.9;
-    transform: scale(0.98);
-}
-
-
-section {
-    scroll-snap-align: start; /* Aligns section to the top on scroll */
-    height: 100vh; /* Makes each section full-screen */
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    text-align: center;
-    padding: 2rem;
-    transition: opacity 0.5s, transform 0.5s ease; /* Smooth transition effects */
-}
-
-section:not(.hero) {
-    opacity: 0.8; /* Initial opacity for sections (non-hero) */
-    transform: scale(0.95); /* Slightly scaled down */
-}
-
-section:target, section:focus-visible, section:hover {
-    opacity: 1; /* Bring full focus to active section */
-    transform: scale(1); /* Restore to normal size */
-}
-
-
-/* Optional Smooth Animation for Buttons/Elements */
-.start-btn, .mode-btn, .contact-btn {
-    animation: fadeIn 1s ease-in-out;
-}
-
-@keyframes fadeIn {
-    from {
-        opacity: 0;
-        transform: translateY(10px);
-    }
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
-}
-
-
-
-
-/* General Section Styling */
-.game-modes, .developer-team {
-    height: 100vh; /* Full-screen height */
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    padding: 2rem;
-    text-align: center;
-    background: #222; /* Default background for sections */
-    color: #fff;
-}
-
-.content-section:nth-child(2n),
-.game-modes:nth-child(2n),
-.developer-team:nth-child(2n) {
-    background: #111; /* Alternate background for contrast */
-}
 
 * {
     margin: 0;
@@ -380,18 +297,18 @@ header {
 
 /* Content Sections */
 .content-section {
-    height: 100vh; /* Full screen */
+    margin-bottom: 4rem; /* Add space below each section */
+    height: auto; /* Adjust height dynamically for content */
+    scroll-snap-align: start;
     display: flex;
     flex-direction: column;
-    justify-content: flex-start;
+    justify-content: center;
     align-items: center;
     padding: 2rem;
     text-align: center;
-    background: #222; /* Background for the section */
+    background: #222;
     color: #fff;
-    opacity: 0; /* Initially hidden */
-    transform: translateY(20px); /* Slide down effect */
-    transition: opacity 1s ease-out, transform 1s ease-out; /* Smooth transition */
+    transition: opacity 1s ease-out, transform 1s ease-out; /* Smooth fade/transform */
 }
 
 /* Make section visible on focus or hover */
@@ -440,24 +357,21 @@ header {
 
 
 .game-modes {
-    max-width: 1000px;
-    max-height: 1000px;
-    margin: 3rem auto;
+    margin-top: 6rem; /* Push game-modes section further down */
+    max-width: 600px; /* Adjust width for responsive layout */
+    max-height: 700px;
     padding: 2rem;
     text-align: center;
-    border-radius: 12px; /* Rounded corners */
-    position: relative; /* Required for pseudo-elements */
-    background: #333; /* Background color of the section */
+    border-radius: 12px;
+    position: relative;
+    background: #333;
     color: #fff;
-    overflow: hidden; /* Ensures effects stay within the section */
-    z-index: 1; /* Place it above other elements */
-    border: 0.2rem solid #39ff14; /* Neon green base border */
-    box-shadow:
-            0 0 3px #39ff14,
-            0 0 6px #39ff14,
-            0 0 12px #39ff14,
-            0 0 20px #39ff14; /* Reduced glow intensity */
-    animation: neon-pulsate 2s infinite alternate; /* Subtle pulsating glow */
+    overflow: hidden;
+    z-index: 1;
+    border: 0.2rem solid #39ff14;
+    box-shadow: 0 0 6px #39ff14, 0 0 12px #39ff14;
+    scroll-snap-align: start;
+    transition: opacity 1s ease-out, transform 1s ease-out;
 }
 
 /* Pulsating Glow Animation */
@@ -572,12 +486,25 @@ header {
 
 
 /* Developer Team Section */
+/* Developer Team Section */
 .developer-team {
     text-align: center;
-    padding: 4rem 2rem;
-    background-color: #222;
-    color: #fff;
-    overflow: hidden; /* Ensures animations don't overflow */
+    padding: 4rem 2rem; /* Ensure padding to add spacing */
+    background-color: #222; /* Section background */
+    color: #fff; /* Text color */
+    overflow: hidden; /* Prevent overflow */
+    scroll-snap-align: start; /* Snap alignment for smooth scrolling */
+    transition: opacity 1s ease, transform 1s ease; /* Smooth fade-in effect */
+    opacity: 0; /* Initially hidden */
+    transform: translateY(20px); /* Slide effect for appearance */
+}
+
+.developer-team:focus-within,
+.developer-team:hover,
+.developer-team:target,
+.developer-team:visible {
+    opacity: 1; /* Make visible */
+    transform: translateY(0); /* Reset position */
 }
 
 .developer-team h2 {
@@ -585,7 +512,7 @@ header {
     color: #4CAF50;
     margin-bottom: 2rem;
     font-family: 'Press Start 2P', cursive;
-    text-shadow: 0 0 2px #4CAF50, 0 0 2px #39ff14;
+    text-shadow: 0 0 2px #4CAF50, 0 0 2px #39ff14; /* Neon glow effect */
 }
 
 /* Team Members Container */
@@ -593,7 +520,8 @@ header {
     display: flex;
     flex-wrap: wrap;
     gap: 2rem;
-    justify-content: center;
+    justify-content: center; /* Center the team members */
+    padding: 1rem 0; /* Ensure spacing on mobile */
 }
 
 /* Member Card */
@@ -602,55 +530,19 @@ header {
     border-radius: 12px;
     padding: 1.5rem;
     width: 200px;
-    box-shadow: 0 0 5px rgba(57, 255, 20, 0.5);
+    box-shadow: 0 0 5px rgba(57, 255, 20, 0.5); /* Subtle glow */
     border: 2px solid transparent;
     position: relative;
-    opacity: 0; /* Hidden initially */
-    transform: translateY(50px); /* Start slightly below */
-    animation: none; /* No animation initially */
-    transition: transform 0.3s ease, opacity 0.3s ease; /* Smooth transition */
+    opacity: 1; /* Make visible */
+    transform: translateY(0); /* Reset position */
+    transition: transform 0.3s ease, opacity 0.3s ease; /* Smooth transitions */
 }
 
-.developer-team:is(:hover, :focus-within) .member {
-    animation: fadeInBounce 1s ease forwards; /* Trigger bounce animation */
-}
-
-/* Animations will stagger for each card */
-.member:nth-child(1) { animation-delay: 0.2s; }
-.member:nth-child(2) { animation-delay: 0.4s; }
-.member:nth-child(3) { animation-delay: 0.6s; }
-.member:nth-child(4) { animation-delay: 0.8s; }
-.member:nth-child(5) { animation-delay: 1s; }
-.member:nth-child(6) { animation-delay: 1.2s; }
-
-/* Bounce Animation */
-@keyframes fadeInBounce {
-    0% {
-        opacity: 0;
-        transform: translateY(50px); /* Start below */
-    }
-    50% {
-        opacity: 1;
-        transform: translateY(-10px); /* Bounce up slightly */
-    }
-    100% {
-        opacity: 1;
-        transform: translateY(0); /* Settle into position */
-    }
-}
-
-/* Hover Effects */
 .member:hover {
-    transform: scale(1.1);
+    transform: scale(1.1); /* Slight zoom on hover */
     box-shadow: 0 0 20px rgba(57, 255, 20, 0.8);
     border-color: #39ff14;
     background-color: rgba(51, 51, 51, 0.9);
-}
-
-.member:hover h3,
-.member:hover p {
-    color: #fff;
-    text-shadow: 0 0 5px #39ff14, 0 0 10px #39ff14;
 }
 
 /* Subtle Background Glow */
@@ -667,9 +559,24 @@ header {
 }
 
 .member:hover::before {
-    opacity: 1;
+    opacity: 1; /* Show background glow on hover */
 }
+/* Mobile Adjustments */
+@media (max-width: 768px) {
+    .developer-team {
+        padding: 3rem 1rem; /* Add more padding for mobile */
+    }
 
+    .team-members {
+        flex-direction: column; /* Stack members vertically */
+        gap: 1.5rem; /* Reduce spacing between cards */
+    }
+
+    .member {
+        width: 90%; /* Take most of the screen width */
+        margin: 0 auto; /* Center the cards */
+    }
+}
 
 /* Footer styling */
 .footer {
@@ -778,7 +685,110 @@ header {
     color: #aaa;
 }
 
+.snap-wrapper {
+    scroll-snap-type: y mandatory; /* Enables vertical snapping */
+    height: 100%;
+    overflow-y: scroll; /* Allows vertical scrolling within the wrapper */
+}
+
+
+
+
+/* Optional Smooth Transitions */
+section {
+    transition: opacity 0.5s, transform 0.5s ease;
+}
+
+section:focus-visible, section:hover {
+    opacity: 1;
+    transform: scale(1);
+}
+
+section:not(:hover) {
+    opacity: 0.9;
+    transform: scale(0.98);
+}
+
+
+section {
+    scroll-snap-align: start;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 2rem;
+    transition: opacity 0.5s, transform 0.5s ease;
+}
+
+section:not(.hero) {
+    opacity: 0.8;
+    transform: scale(0.95);
+}
+
+section:target, section:focus-visible, section:hover {
+    opacity: 1;
+    transform: scale(1);
+}
+
+.start-btn, .mode-btn, .contact-btn {
+    animation: fadeIn 1s ease-in-out;
+}
+
+.content-section:nth-child(2n),
+.game-modes:nth-child(2n),
+.developer-team:nth-child(2n) {
+    background: #111; /* Alternate background for contrast */
+}
+
+section {
+    opacity: 0; /* Initially invisible */
+    transform: translateY(20px); /* Slide up as it appears */
+    transition: opacity 1s ease, transform 1s ease; /* Smooth animation */
+}
+
+section:focus-within, section:hover, section:target, section:visible {
+    opacity: 1; /* Make section visible */
+    transform: translateY(0); /* Reset position */
+}
+
+/* Add Extra Space Between Sections */
+.content-section + .game-modes {
+    margin-top: 6rem; /* Add space between content-section and game-modes */
+}
+
+@keyframes fadeInSection {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
 @media (max-width: 768px) {
+
+    /* Footer section overall padding */
+    .footer {
+        padding: 2rem 1rem;
+    }
+    .footer-content {
+        flex-direction: column;
+        gap: 1rem;
+        padding: 1rem 0;
+    }
     .content-section h2 {
         font-size: 1.4rem;
     }
@@ -787,7 +797,7 @@ header {
         border-right: none;
     }
 
-        .contact-info p {
+    .contact-info p {
         font-size: 12px;
     }
 
@@ -829,3 +839,23 @@ header {
     }
 }
 
+@media (max-width: 768px) {
+    /* Add more space between sections */
+    .content-section {
+        margin-bottom: 6rem;
+    }
+
+    .game-modes {
+        margin-top: 8rem; /* Push game-modes further for mobile */
+        padding: 1.5rem;
+        max-width: 90%; /* Adjust size for smaller screens */
+    }
+
+    .snap-wrapper {
+        padding: 1rem 0;
+    }
+
+    section {
+        margin-bottom: 4rem;
+    }
+}
